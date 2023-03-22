@@ -4,10 +4,9 @@ namespace master_node;
 
 public class ClientObject
 {
-    private string Id { get;} 
-    private StreamWriter Writer { get;}
-    private StreamReader Reader { get;}
-
+    private string Id;
+    public StreamReader reader;
+    public StreamWriter writer;
     private ServerObject _server;
     private Socket _client;
     
@@ -18,12 +17,13 @@ public class ClientObject
         Id = Guid.NewGuid().ToString();
         
         NetworkStream stream = new NetworkStream(_client);
-        Reader = new StreamReader(stream);
-        Writer = new StreamWriter(stream);
+        reader = new StreamReader(stream);
+        writer = new StreamWriter(stream);
+        new StreamWriter(stream);
     }
 
-    public Task ProcessAsync()
+    public void SendTask(CalculationTask task)
     {
-        return Task.Delay(500);
+        Thread.Sleep(500);
     }
 }

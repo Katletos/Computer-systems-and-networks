@@ -24,7 +24,7 @@ public class CalculationTask
         return newTask;
     }
     
-    void IsPrime()
+    public void IsPrime()
     {
         for (uint i = 0; i < Math.Round(Math.Sqrt(number)); ++i)
         {

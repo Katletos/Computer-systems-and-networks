@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using System.Text;
+using System.Text.Json;
+using master_node;
 
 IPHostEntry ipHostInfo = await Dns.GetHostEntryAsync("localhost");
 IPAddress ipAddress = ipHostInfo.AddressList[0];
@@ -20,42 +21,46 @@ while (true)
 {
     StreamReader reader = new StreamReader(stream);
     StreamWriter writer = new StreamWriter(stream);
-    if (reader is null || writer is null) return;
+    await GetNewTask(writer);
+    await SendTaskResult(writer, Process(reader));
     
-    // запускаем новый поток для получения данных
-    Task.Run(()=>ReceiveMessageAsync(reader));
-    // запускаем ввод сообщений
-    await SendMessageAsync(writer);
 }
 
-
-async Task ReceiveMessageAsync(StreamReader reader)
+async Task GetNewTask(StreamWriter writer)
 {
-    while (true)
-    {
-        try
-        {
-            
-        }
-        catch
-        {
-            break;
-        }
-    }
-}
-
-
-async Task SendMessageAsync(StreamWriter writer)
-{
-    // сначала отправляем имя
-    await writer.WriteLineAsync();
+    await writer.WriteLineAsync("<FREE>");
     await writer.FlushAsync();
-    Console.WriteLine("Для отправки сообщений введите сообщение и нажмите Enter");
- 
-    while (true)
+    Console.WriteLine("Send request for a new task.");
+}
+
+CalculationTask Process(StreamReader reader)
+{
+    var str = reader.ReadLine();
+    var task = JsonSerializer.Deserialize<CalculationTask>(str); 
+    Console.Write("Readed task: ");
+    Console.WriteLine(task.ToString());
+    task.IsPrime();
+    Console.WriteLine(task.ToString());
+    return task;
+}
+
+async Task SendTaskResult(StreamWriter writer, CalculationTask task)
+{
+    await writer.WriteLineAsync(JsonSerializer.Serialize(task));
+    await writer.FlushAsync();
+    
+    Console.WriteLine("Send completed task.");
+}
+
+bool IsPrime(ulong number)
+{
+    for (uint i = 0; i < Math.Round(Math.Sqrt(number)); ++i)
     {
-        string? message = Console.ReadLine();
-        await writer.WriteLineAsync(message);
-        await writer.FlushAsync();
+        if (number % i == 0)
+        {
+            return true;
+        }
     }
+
+    return false;
 }

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/litvin/work/bsuir/poit/4-term/lab-4/master-node/master-node.csproj",
+      "projectUniqueName": "/home/litvin/work/bsuir/poit/4-term/Computer-systems-and-networks/lab-4/master-node/master-node.csproj",
       "projectName": "master-node",
-      "projectPath": "/home/litvin/work/bsuir/poit/4-term/lab-4/master-node/master-node.csproj",
+      "projectPath": "/home/litvin/work/bsuir/poit/4-term/Computer-systems-and-networks/lab-4/master-node/master-node.csproj",
       "packagesPath": "/home/litvin/.nuget/packages/",
-      "outputPath": "/home/litvin/work/bsuir/poit/4-term/lab-4/master-node/obj/",
+      "outputPath": "/home/litvin/work/bsuir/poit/4-term/Computer-systems-and-networks/lab-4/master-node/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/litvin/.nuget/NuGet/NuGet.Config"
